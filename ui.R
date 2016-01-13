@@ -8,11 +8,11 @@ shinyUI(fluidPage(
              sidebarLayout(
                sidebarPanel(
                  helpText("Options"),    
-                 fileInput("File1", "Updload RNAseq data file", accept = c(".rds",".rdata")),
+                 fileInput("File1", "Updload RNAseq data file"),
                  selectInput("fileContent","File Content",choices=c("Expression Matrix","Expression Set"),selected="Expression Matrix"),
                  tags$textarea(id = "geo_id", placeholder = 'GEO ID', rows = 1, ""),
-                 fileInput("File2", "Optional: Upload RNAseq module file", accept = c(".rds",".rdata")),
-                 fileInput("File3", "Optional: Upload RNAseq reactions list", accept = c(".rds",".rdata")),
+                 fileInput("File2", "Optional: Upload RNAseq module file"),
+                 fileInput("File3", "Optional: Upload RNAseq reactions list"),
                  selectInput("specie","Specie",choices=c("hsapiens","rnorvegicus")),
                  selectInput("specieEnsembl","specieEnsembl",choices=c("rnorvegicus_gene_ensembl","hsapiens_gene_ensembl")),
                  selectInput("groupBy",label="Make group by",choices=c("groups","fuzzy"),selected="groups"),
@@ -163,10 +163,10 @@ shinyUI(fluidPage(
              sidebarLayout(
                sidebarPanel(
                  helpText("Option"),    
-                 fileInput("File5", "Updload metylation table file", accept = c(".rds",".rdata")),
-                 fileInput("File6", "Updload metylation results file", accept = c(".rds",".rdata")),
-                 fileInput("File7", "Optional: Upload methylation module file", accept = c(".rds",".rdata")),
-                 fileInput("File8", "Optional: Upload methylation reactions list", accept = c(".rds",".rdata")),
+                 fileInput("File5", "Updload metylation table file"),
+                 fileInput("File6", "Updload metylation results file"),
+                 fileInput("File7", "Optional: Upload methylation module file"),
+                 fileInput("File8", "Optional: Upload methylation reactions list"),
                  
                  selectInput("specieEnsembl","specieEnsembl",choices=c("rnorvegicus_gene_ensembl","hsapiens_gene_ensembl")),
                  selectInput("symbol","Type of gene symbols",choices=c("rgd_symbol","hgnc_symbol")),
