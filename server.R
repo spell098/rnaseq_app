@@ -41,6 +41,7 @@ library(IRanges)
 library(graphite)
 require(ggplot2)
 library(rsconnect)
+library(shinyapps)
 
 #WHEN THE DESIGN IS CHANGED (GROUPS CHANGED) THE SAMPLES NEED TO BE RENORMALIZED, 
 #THE PIPELINE HAS TO START FROM RAW DATA TO ALLOW THAT
