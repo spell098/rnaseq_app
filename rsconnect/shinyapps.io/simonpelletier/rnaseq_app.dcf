@@ -1,0 +1,9 @@
+name: rnaseq_app
+account: simonpelletier
+server: shinyapps.io
+appId: 77811
+bundleId: 348891
+url: https://simonpelletier.shinyapps.io/rnaseq_app/
+when: 1452693907.54247
+asMultiple: FALSE
+asStatic: FALSE
