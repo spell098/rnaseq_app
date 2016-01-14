@@ -1,6 +1,6 @@
 affy2ensembl = function(affyID){
   write.csv(affyID,"affyID.csv",quote=FALSE)
-  system('awk -F "," \'NR==FNR{c[$2]=1;next} c[$2] == 1 {print $1","$2}\' affyID.csv http://ratking.duckdns.org/~simon/annotations/databases/affygene.csv > affy2ensembl.csv')
+  system('awk -F "," \'NR==FNR{c[$2]=1;next} c[$2] == 1 {print $1","$2}\' annotations/affyID.csv annotations/databases/affygene.csv > annotations/affy2ensembl.csv')
   ensemblID = read.csv("affy2ensembl.csv")
   return(ensemblID)
 } 
