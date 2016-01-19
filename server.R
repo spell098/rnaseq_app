@@ -1,9 +1,7 @@
 
 # All large files are on ratking and retrieved using the system(wget ...,intern=TRUE) function 
 
-
-source("functions/rnaseq_functions.R")
-source("functions/methylAnalysis_functions.R")
+library(rnaseqApp)
 library(BiocGenerics)
 library(annotate)
 library(GEOquery)
@@ -40,7 +38,7 @@ library(IRanges)
 library(graphite)
 require(ggplot2)
 library(rsconnect)
-library(shinyapps)
+#library(shinyapps)
 
 #WHEN THE DESIGN IS CHANGED (GROUPS CHANGED) THE SAMPLES NEED TO BE RENORMALIZED, 
 #THE PIPELINE HAS TO START FROM RAW DATA TO ALLOW THAT
@@ -247,7 +245,7 @@ shinyServer(
       ###                              OUTPUTS                                     ###
       ################################################################################
       output$text1 <- renderText({ 
-        print((clusters1()))
+        #print((clusters1()))
         #print(selectedTopReactions()[[selectedComparison()]][input$topReactions_rows_selected,])
       })
       ################################################################################

@@ -1,0 +1,47 @@
+#' Takes an ensembl_gene_id
+#' @author Simon J Pelletier
+#' @aliases annotate_ensembl
+#' @param IDs All IDs (rat or human); all are ensembl_gene_id
+#' @return The object resultsContrast annotated with an associated color for the selected comparison
+#' @keywords ensembl IDs
+#' @seealso
+#' \code{\link{colorNumericValues}} #Hyperlink does not seem to be working...
+#' @export
+annotate_ensembl = function(IDs){
+  print("Homemade annotation")
+  write.csv(IDs,"annotations/gene_names.csv",quote=FALSE)
+  write.table(IDs,"annotations/gene_names.ssv",quote=FALSE,sep=";")
+  #write.table(rownames(expr.matrix),"annotations/gene_names.txt",sep="\t",quote=FALSE)
+  if (length(grep("ENSRNOG",IDs[1])) > 0){
+    typeID = "ensembl_gene_id"
+    system('awk -F "," \'NR==FNR{c[$2]=1;next} c[$1] == 1  && ( $3 || $4 ) {print $1","$3","$4}\' annotations/gene_names.csv annotations/databases/rat_symbols.csv > annotations/genes_annotations.csv')
+    system('awk -F ";" \'NR==FNR{c[$2]=1;next} c[$1] == 1  && ( $3 || $4 ) {print $1";"$3";"$4}\' annotations/gene_names.ssv annotations/databases/allGO.ssv > annotations/go.txt')
+    annotations=read.csv("annotations/genes_annotations.csv",header=FALSE)
+    colnames(annotations) = c(typeID,"symbol","entrezgene_id")
+    go=read.table("annotations/go.txt",header=FALSE,sep=";",quote="")
+    colnames(go) = c(typeID,"go_term_name","go_domain")
+  }else if (length(grep("ENSRNOT",IDs[1])) > 0){
+    typeID = "ensembl_transcript_id"
+    system('awk -F "," \'NR==FNR{c[$2]=1;next} c[$2] == 1  && ( $3 || $4 ) {print $1","$2","$3","$4}\' annotations/gene_names.csv annotations/databases/rat_symbols.csv > annotations/genes_annotations.csv')
+    system('awk -F ";"\'NR==FNR{c[$2]=1;next} c[$2] == 1  && ( $3 || $4 ) {print $1";"$2";"$3";"$4}\' annotations/gene_names.ssv annotations/databases/allGO.ssv > annotations/go.txt')
+    annotations=read.csv("annotations/genes_annotations.csv",header=FALSE)
+    colnames(annotations) = c("ensembl_gene_id",typeID,"symbol","entrezgene_id")
+    go=read.table("annotations/go.txt",header=FALSE,sep=';',quote="")
+    colnames(go) = c("ensembl_gene_id",typeID,"go_term_name","go_domain")
+  }else if (length(grep("A_",IDs[1])) > 0){
+    typeID = "efg_agilent_wholegenome_4x44k_v1"
+    #REMPLACER LES ROWNAMES PAR NOMS TRANSCRIPTS
+    system("annotations/annotation_agilent_go.sh",input=rownames(expr.matrix))
+    annotations=read.csv("annotations/genes_annotations.csv",header=FALSE)
+  } else if (length(grep("ENSG",IDs[1])) > 0){
+    typeID = "ensembl_gene_id"
+    system('awk -F "," \'NR==FNR{c[$2]=1;next} c[$1] == 1  && ( $3 || $4 ) {print $1","$3","$4}\' annotations/gene_names.csv annotations/databases/hgnc.csv > annotations/genes_annotations.csv')
+    system('awk -F ";" \'NR==FNR{c[$2]=1;next} c[$1] == 1  && ( $3 || $4 ) {print $1";"$3";"$4}\' annotations/gene_names.ssv annotations/databases/go_human.ssv > annotations/go.txt')
+    annotations=read.csv("annotations/genes_annotations.csv",header=FALSE)
+    colnames(annotations) = c(typeID,"symbol","entrezgene_id")
+    go=read.table("annotations/go.txt",header=FALSE,sep=";",quote="")
+    colnames(go) = c(typeID,"go_term_name","go_domain")
+  }
+  genes_annotation_unique = annotations[!duplicated(as.character(annotations[,typeID])),]
+  return(list(annotations,go,genes_annotation_unique,typeID))
+}
