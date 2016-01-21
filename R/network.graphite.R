@@ -1,7 +1,38 @@
+#' Transform intensity values in a gradient of color from green to red.
+#' @author Simon J Pelletier
+#' @import graphite
+#' @param pSymbol .
+#' @param expr.matrix Expression set containing all the information on a dataset
+#' @param typeID Type of IDs used as rows in the expression matrix.Default="ensembl_gene_id"
+#' @param topTable3 topTable results for every gene
+#' @param pvalue p-value limit
+#' @return A vector of colors. The darkest green values are the lowest and the darkest red values are the highest.
+#' @keywords comparisons
+#' @seealso
+#' \code{\link[GEOquery]{getGEO}}
+#' \code{\link[Biobase]{ExpressionSet}}
+#' @examples
+#' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+#' topReactions <- readRDS("data/reactions_mfuzz.rds")
+#' topTable3 <- readRDS("data/topTable3_LGVD.rds")
+#' selectedReaction <- "RHO GTPases activate PAKs"
+#' ratReactome <- pathways("rnorvegicus", "reactome")
+#' p <- ratReactome[[selectedReaction]]
+#' pSymbol <- convertIdentifiers(p, "SYMBOL")
+#' toptableNodes = cbind(
+#'    topTable3[[selectedComparison]][match(nodes(pSymbol),topTable3[[selectedComparison]]$symbol),],
+#'    Reaction = rep(selectedReaction[[1]],length(nodes(pSymbol)))
+#' )
+#' toptableNodes1 = toptableNodes[!is.na(toptableNodes[,1]),]
+#' typeID = "ensembl_gene_id"
+#' threshold = 0.8
+#'
+#' network.graphite(pSymbol,expr.matrix,toptableNodes,typeID,threshold,selectedReaction,toptable3,selectedComparison,expr.toBind,pvalue)
+#' @export
 network.graphite = function(pSymbol,expr.matrix,toptableNodes,typeID,threshold,selectedReaction,toptable3,selectedComparison,expr.toBind,pvalue){
   nodes = cbind(symbol=nodes(pSymbol),Reaction=rep(selectedReaction,length(nodes(pSymbol))))
   colnames(nodes) = c("symbol","reaction")
-  
+
   edgeColor = NULL
   arrow=NULL
   tail=NULL
@@ -9,14 +40,14 @@ network.graphite = function(pSymbol,expr.matrix,toptableNodes,typeID,threshold,s
   networkSelectedReaction = export2cytoscape(expr.matrix,toptableNodes,threshold,typeID)
   networkSelectedReaction$edgeData[,"fromNode"] = as.character(toptableNodes[,"symbol"])[match(networkSelectedReaction$edgeData[,"fromNode"],toptableNodes[,"ensembl_gene_id"])]
   networkSelectedReaction$edgeData[,"toNode"] = as.character(toptableNodes[,"symbol"])[match(networkSelectedReaction$edgeData[,"toNode"],toptableNodes[,"ensembl_gene_id"])]
-  
+
   edges = merge(networkSelectedReaction$edgeData,edges(pSymbol),by.x=c("fromNode","toNode","type","direction"),by.y=c("src","dest","type","direction"),all.x=TRUE,all.y=TRUE)
-  
+
   gSymbol <- pathwayGraph(pSymbol,edge.type=NULL)
   g2 <- addEdge(networkSelectedReaction$edgeData[,"fromNode"], networkSelectedReaction$edgeData[,"toNode"], gSymbol, networkSelectedReaction$edgeData[,"weight"])
-  
+
   g3 <- layoutGraph(g2)
-  
+
   toptableNodes = merge(toptable3[[selectedComparison]],nodes,by="symbol",all.y=TRUE)
   toptableNodes$logFC[is.na(toptableNodes$logFC)] = 0
   fc=toptableNodes$logFC
@@ -35,40 +66,40 @@ network.graphite = function(pSymbol,expr.matrix,toptableNodes,typeID,threshold,s
     }else col=rgb(red=0,green=0,blue=1,(abs(as.numeric(x["logFC"])/min(toptable3[[selectedComparison]][,"logFC"])+0.000001)))
   })
   signif=apply(toptableNodes,1,function(x){
-    if (as.numeric(x["adj.P.Val"]) < pvalue){ signif="triangle" 
+    if (as.numeric(x["adj.P.Val"]) < pvalue){ signif="triangle"
     }else signif="circle"
   })
-  
+
   types.edges = as.character(unique(edges[,"type"]))
   #types.colors = wes[1:length(types.edges)]
   types.colors = c("blue","red","black","cyan","green","dodgerblue","forestgreen","deeppink")
   names(types.colors) = types.edges
   numChildren = networkSelectedReaction$nodeData$numChildren
   names(numChildren) = networkSelectedReaction$nodeData[,4]
-  
-  
-  
+
+
+
   for (i in 1:nrow(edges)){
     a=rownames(edges)[!is.na(match(edges[,2],edges[,1][i]))]
     b=rownames(edges)[!is.na(match(edges[,1],edges[,2][i]))]
     c=match(a,b)
     d=c[!is.na(c)]
     d=a[!is.na(a[c])]
-    
+
     if (length(d) > 0 && as.character(edges[,"type"][i]) != "binding"){
-      if(length(grep("ACTIVATION",as.character(edges[i,"type"]))) > 0 && length(grep("ACTIVATION",as.character(edges[d,"type"]))) > 0){ 
+      if(length(grep("ACTIVATION",as.character(edges[i,"type"]))) > 0 && length(grep("ACTIVATION",as.character(edges[d,"type"]))) > 0){
         arrow[i] = "normal"
         tail[i]="normal"
         edgeColor[i] = "green"
-      } else if (length(grep("INHIBITION",as.character(edges[i,"type"]))) > 0 && length(grep("INHIBITION",as.character(edges[d,"type"]))) > 0){ 
+      } else if (length(grep("INHIBITION",as.character(edges[i,"type"]))) > 0 && length(grep("INHIBITION",as.character(edges[d,"type"]))) > 0){
         arrow[i] = "tee"
         tail[i]="tee"
         edgeColor[i] = "green"
-      } else if (length(grep("INHIBITION",as.character(edges[i,"type"]))) > 0 && length(grep("ACTIVATION",as.character(edges[d,"type"]))) > 0){ 
+      } else if (length(grep("INHIBITION",as.character(edges[i,"type"]))) > 0 && length(grep("ACTIVATION",as.character(edges[d,"type"]))) > 0){
         arrow[i] = "tee"
         tail[i]="normal"
         edgeColor[i] = "green"
-      } else if (length(grep("ACTIVATION",as.character(edges[i,"type"]))) > 0 && length(grep("INHIBITION",as.character(edges[d,"type"]))) > 0){ 
+      } else if (length(grep("ACTIVATION",as.character(edges[i,"type"]))) > 0 && length(grep("INHIBITION",as.character(edges[d,"type"]))) > 0){
         arrow[i] = "tee"
         tail[i]="normal"
         edgeColor[i] = "green"
@@ -77,10 +108,10 @@ network.graphite = function(pSymbol,expr.matrix,toptableNodes,typeID,threshold,s
         arrow[i] = "normal"
         edgeColor[i] = "pink"
       }
-      
+
     }else if(length(grep("ACTIVATION", as.character(edges$type[i]))) == 1){
       arrow[i] = "normal"
-      tail[i] = "none"   
+      tail[i] = "none"
       edgeColor[i] = "black"
     } else if (length(grep("INHIBITION", as.character(edges$type[i]))) == 1){
       arrow[i] = "none"
@@ -100,8 +131,8 @@ network.graphite = function(pSymbol,expr.matrix,toptableNodes,typeID,threshold,s
       edgeColor[i] = "yellow"
     }
   }
-  
-  
+
+
   edgeWeight=apply(edges,1,function(x){
     if (!is.na(x["weight"])) as.numeric(x["weight"])*3 else 1
   })
@@ -110,13 +141,13 @@ network.graphite = function(pSymbol,expr.matrix,toptableNodes,typeID,threshold,s
   names(edgeColor) = edgeNames
   names(tail) = edgeNames
   names(arrow) = edgeNames
-  
-  
+
+
   as.numeric(toptable3[[selectedComparison]][,"logFC"])
   names(colorIntensity) = as.character(toptableNodes[,1])
   names(signif) = as.character(toptableNodes[,1])
   names(textCol) = as.character(toptableNodes[,1])
-  
+
   nodeRenderInfo(g3) <- list(
     fill     = colorIntensity,
     col      = "black",
@@ -126,8 +157,8 @@ network.graphite = function(pSymbol,expr.matrix,toptableNodes,typeID,threshold,s
     fontsize = 15,
     textCol=textCol,
     cex=0.9)
-  
-  
+
+
   edgeRenderInfo(g3) <-  list(
     col = edgeColor,
     lwd = edgeWeight,
@@ -135,11 +166,11 @@ network.graphite = function(pSymbol,expr.matrix,toptableNodes,typeID,threshold,s
     arrowtail=tail)
   graph.par(list(graph=list(
     main     = selectedComparison,
-    sub      = selectedReaction, 
+    sub      = selectedReaction,
     cex.main = 1.8,
-    cex.sub  = 1.4, 
+    cex.sub  = 1.4,
     col.sub  = "gray")
-    
+
   )
   )
   return(g3)

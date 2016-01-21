@@ -4,32 +4,27 @@
 \alias{design_contrasts}
 \title{Create a design matrix for linear models analysis}
 \usage{
-design_contrasts(names)
+design_contrasts(expr.matrix)
 }
 \arguments{
 \item{names}{A vector of the names of all samples}
 }
 \value{
-a design matrix for linear models analysis
+An experimental design matrix
 }
 \description{
 Create a design matrix for linear models analysis
 }
 \examples{
 expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
-design <- design_contrasts(expr.matrix)
-lm2 <- lm2Contrast(expr.matrix,design)
-lm2.contrast = lm2[[1]]
-contrasts=lm2[[2]]
-contrast.matrix=lm2[[3]]
+names <- get_names(colnames(expr.matrix))
+design <- design_contrast(names)
 }
 \author{
 Simon J Pelletier
 }
 \seealso{
-\code{\link{design_contrasts}}
-\code{\link{makeContrasts}}
-\code{\link[limma]{lmFit}}
+\code{\link{get_names}}
 }
 \keyword{design}
 \keyword{limma}

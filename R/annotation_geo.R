@@ -5,8 +5,7 @@
 #' @param geoAccession The platform ID
 #' @return A table with all the annotation for a platform
 #' @examples
-#' #Illumina HumanHT-12 V4.0 expression beadchip
-#' annotation_geo('GPL10558')
+#' annotation_geo('GPL10558') #Illumina HumanHT-12 V4.0 expression beadchip
 #' @keywords geo annotation
 #' @seealso
 #' \code{\link[GEOquery]{getGEO}} ,

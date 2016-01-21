@@ -16,8 +16,7 @@ A table with all the annotation for a platform
 Get the annotations used in a NCBI GEO dataset
 }
 \examples{
-#Illumina HumanHT-12 V4.0 expression beadchip
-annotation_geo('GPL10558')
+annotation_geo('GPL10558') #Illumina HumanHT-12 V4.0 expression beadchip
 }
 \author{
 Simon J Pelletier

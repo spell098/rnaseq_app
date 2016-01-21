@@ -1,22 +1,22 @@
-#' Transform intensity values in a gradient of color from green to red.
+#' Export results in cytoscape format
 #' @author Simon J Pelletier
-#' @param expr.matrix A vector of the names of all samples
-#' @param results A list of matrices. Each matrix contain a
+#' @import WGCNA
+#' @param expr.matrix A matrix of numeric values. Rows are genes, columns are samples
+#' @param results A topTable with only the genes considered significant (according to
+#' the p-value and logFC limits provided in the function results_topTable)
 #' @param threshold The lowest value of correlation to make the link
 #' considered significantly high
 #' @param typeID The type of ID used, e.g.
-#' @return A vector of all possible comparisons
+#' @return The results in cytoscape format
 #' @keywords cytoscape export
-#' @seealso \code{\link{}}
+#' @seealso \code{\link[WGCNA]{adjacency}}
 #' @examples
-#' expr.matrix
-#' results
-#' networkSelectedComparison = export2cytoscape(expr.matrix,results[[selectedComparison]],threshold,typeID)
-
+#' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+#' results <- readRDS("data/results_LGVD.rds")
+#' export2cytoscape <- export2cytoscape(expr.matrix,results[[1]])
 #' @export
 export2cytoscape = function(expr.matrix,results,threshold=0.9,typeID="ensembl_gene_id"){
   expr.matrix.selected = expr.matrix[match(as.character(results[,typeID][!is.na(results[,typeID])]),rownames(expr.matrix)),]
-
   expr.adj.selected = adjacency(matrix(as.numeric(t(expr.matrix.selected)),ncol=nrow(expr.matrix.selected),nrow=ncol(expr.matrix.selected)))
   rownames(expr.adj.selected) = rownames(expr.matrix.selected)
   colnames(expr.adj.selected) = rownames(expr.matrix.selected)

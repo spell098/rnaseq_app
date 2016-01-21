@@ -5,6 +5,10 @@
 #' @return The object resultsContrast annotated with an associated color for the selected comparison
 #' @keywords colors
 #' @seealso \code{\link[rnaseqApp]{colorNumericValues}}
+#' @examples
+#' resultsContrast <-
+#' selectedComparison <-
+#' resultsContrastRamp <- addColorsMatrix(resultsContrast,selectedComparison)
 #' @export
 addColorsMatrix <- function(resultsContrast,selectedComparison){
   resultsContrastRamp = data.matrix(resultsContrast[,selectedComparison])

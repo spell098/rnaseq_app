@@ -9,8 +9,13 @@
 #' @param results The results of every comparisons
 #' @param color The colors of all boxplot. One color for each group. Could be found in the function, not imported
 #' @examples
-#' #Illumina HumanHT-12 V4.0 expression beadchip
-#' annotation_geo('GPL10558')
+#' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+#' results <- readRDS("data/expr_matrix_LGVD.rds")
+#' selectedGene <- "ENSRNOG00000046319"
+#' topTable3 <- readRDS("data/topTable3_LGVD.rds")
+#' resultsSummary <- results_summary(results,topTable3)
+#' color <- c("green","blue","red")
+#' boxplot_element(selectedGene,expr.matrix,resultsSummary,results,color)
 #' @keywords geo annotation
 #' @seealso
 #' \code{\link[GEOquery]{getGEO}} ,
@@ -23,7 +28,9 @@
 #' This would remove expr.matrix,resultsSummary,results,selectedGene
 #' colors could also be found in the function. this would leave only a vector from expr.matrix(data) and a vector from resultsSummary(significance)
 #' @export
-boxplot_element = function(selectedGene,names.unique,names,expr.matrix,resultsSummary,results,color){
+boxplot_element = function(selectedGene,expr.matrix,resultsSummary,results,color){
+  names <- get_names(colnames(expr.matrix))
+  names.unique <- unique(names)
   nrows=NULL
   for(i in 1:length(names.unique)){
     nrows[i]=length(grep(names.unique[i],names))

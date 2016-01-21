@@ -4,23 +4,20 @@
 \alias{get_names}
 \title{Get names of each sample and group names}
 \usage{
-get_names(names)
+get_names(x)
 }
 \arguments{
-\item{names}{Samples names}
+\item{x}{Matrix or vector
+column name has to be separeted}
 }
 \value{
-return two objects:names1 -> all names without the number
-(if their was one) which makes the name of samples in the same groups identical.
-names.unique -> A vector of the name of each group (remove identical names from names1)
+The name of each groups.
 }
 \description{
 Get names of each sample and group names
 }
 \examples{
 expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
-pval <- 0.05
-summaryClust <- clusteringSummary(expr.matrix,pval)
 }
 \author{
 Simon J Pelletier

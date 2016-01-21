@@ -17,6 +17,11 @@ The object resultsContrast annotated with an associated color for the selected c
 \description{
 Annotation of a matrix with colors for contrast values
 }
+\examples{
+resultsContrast <-
+selectedComparison <-
+resultsContrastRamp <- addColorsMatrix(resultsContrast,selectedComparison)
+}
 \author{
 Simon J Pelletier
 }

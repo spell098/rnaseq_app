@@ -15,11 +15,20 @@ The object resultsContrast annotated with an associated color for the selected c
 \description{
 Takes an ensembl_gene_id
 }
+\examples{
+expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+IDs <- rownames(expr.matrix)
+annotation1 <- annotate_ensembl(IDs)
+annotations <- annotation1[[1]]
+go <- annotation1[[2]]
+genes_annotation_unique <- annotation1[[3]]
+typeID <- annotation1[[4]]
+}
 \author{
 Simon J Pelletier
 }
 \seealso{
-\code{\link{colorNumericValues}} #Hyperlink does not seem to be working...
+\code{\link{colorNumericValues}}
 }
 \keyword{IDs}
 \keyword{ensembl}

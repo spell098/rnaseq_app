@@ -2,15 +2,16 @@
 % Please edit documentation in R/export2cytoscape.R
 \name{export2cytoscape}
 \alias{export2cytoscape}
-\title{Transform intensity values in a gradient of color from green to red.}
+\title{Export results in cytoscape format}
 \usage{
 export2cytoscape(expr.matrix, results, threshold = 0.9,
   typeID = "ensembl_gene_id")
 }
 \arguments{
-\item{expr.matrix}{A vector of the names of all samples}
+\item{expr.matrix}{A matrix of numeric values. Rows are genes, columns are samples}
 
-\item{results}{A list of matrices. Each matrix contain a}
+\item{results}{A topTable with only the genes considered significant (according to
+the p-value and logFC limits provided in the function results_topTable)}
 
 \item{threshold}{The lowest value of correlation to make the link
 considered significantly high}
@@ -18,21 +19,21 @@ considered significantly high}
 \item{typeID}{The type of ID used, e.g.}
 }
 \value{
-A vector of all possible comparisons
+The results in cytoscape format
 }
 \description{
-Transform intensity values in a gradient of color from green to red.
+Export results in cytoscape format
 }
 \examples{
-expr.matrix
-results
-networkSelectedComparison = export2cytoscape(expr.matrix,results[[selectedComparison]],threshold,typeID)
+expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+results <- readRDS("data/results_LGVD.rds")
+export2cytoscape <- export2cytoscape(expr.matrix,results[[1]])
 }
 \author{
 Simon J Pelletier
 }
 \seealso{
-\code{\link{}}
+\code{\link[WGCNA]{adjacency}}
 }
 \keyword{cytoscape}
 \keyword{export}

@@ -28,7 +28,7 @@ networkSelectedComparison = export2cytoscape(expr.matrix,results[[selectedCompar
 Simon J Pelletier
 }
 \seealso{
-\code{\link{RCytoscape}}
+\code{\link{WGCNA}}
 }
 \keyword{cytoscape}
 \keyword{export}

@@ -1,3 +1,17 @@
+#' Generate boxplots of every groups for a selected gene. Also display stars for significance between groups
+#' @author Simon J Pelletier
+#' @param results The results of one comparison
+#' between at least two groups. Columns = samples, rows = genes,transcripts,CpG...
+#' @examples
+#' results <- readRDS("data/results_LGVD.rds")
+#' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+#' bnet <- readRDS("data/bnet_LGVD.rds")
+#' expr.toBind <- cbind(module=bnet$colors,ensembl_gene_id=rownames(expr.matrix),expr.matrix)
+#' modulesTable <- modules_summary(results,expr.toBind)
+#' @keywords geo annotation
+#' @seealso
+#' \code{\link[stats]{phyper}}
+#' @export
 modules_summary = function(results,expr.toBind){
   ngenes = nrow(expr.toBind)
   modules.unique = as.numeric(as.character(unique(results$module)))
@@ -12,24 +26,24 @@ modules_summary = function(results,expr.toBind){
   }
   modules_table = modules_table[order(modules_table[,"Hits"],decreasing = T),]
   rownames(modules_table) = modules_table$Module
-  for (c in 1:nrow(modules_table)){         
-    # TO CORRECT P-VALUE         
-    # # of test = # of annotations tested         
-    # p-value of GO is calculated using an hypergeometric distribution         
-    hits = modules_table$Hits[c]         
-    possibleHits = modules_table$total[c]      
-    M = totalModules         
-    N = ngenes-possibleHits #total number of genes         
-    pvalue = 1-phyper(hits-1,possibleHits,N,nrow(results))                  
+  for (c in 1:nrow(modules_table)){
+    # TO CORRECT P-VALUE
+    # # of test = # of annotations tested
+    # p-value of GO is calculated using an hypergeometric distribution
+    hits = modules_table$Hits[c]
+    possibleHits = modules_table$total[c]
+    M = totalModules
+    N = ngenes-possibleHits #total number of genes
+    pvalue = 1-phyper(hits-1,possibleHits,N,nrow(results))
     modules_table[,"pvalue"][c] = pvalue
-    
-  }       
-  modules_table = modules_table[order(modules_table[,"pvalue"]),]       
+
+  }
+  modules_table = modules_table[order(modules_table[,"pvalue"]),]
   modules_table[,"qvalue"] = round(p.adjust(modules_table[,"pvalue"],method="BH"),digits=4)
   for (i in 1:length(modules_table[,"qvalue"])){
     if (modules_table[,"qvalue"][i] < 0.001){
       modules_table[,"qvalue"][i] = "< 0.001"
-    } 
-  } 
+    }
+  }
   return(modules_table)
 }

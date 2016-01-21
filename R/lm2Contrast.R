@@ -17,7 +17,7 @@
 #' \code{\link[limma]{MArrayLM}}
 #' @examples
 #' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
-#' design <- design_contrasts(expr.matrix)
+#' design <- design_contrasts(get_names(colnames(expr.matrix)))
 #' results_list <- results_topTable()
 #' lm2 <- lm2Contrast(expr.matrix,design)
 #' lm2.contrast = lm2[[1]]

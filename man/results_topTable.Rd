@@ -4,35 +4,41 @@
 \alias{results_topTable}
 \title{Calculate results}
 \usage{
-results_topTable(lm2.contrast, expr.toBind, pvalue, logFC, typeID,
-  genes_annotation_unique, annotations, adjust)
+results_topTable(lm2.contrast, expr.toBind, pvalue = 0.05, logFC = 1,
+  typeID = "ensembl_gene_id", genes_annotation_unique, annotations,
+  adjust = "no")
 }
 \arguments{
-\item{lm2.contrast}{.}
+\item{lm2.contrast}{MArrayLM object}
 
-\item{expr.toBind}{.}
+\item{expr.toBind}{Expression data.matrix with supplemental colums: module and ID}
 
-\item{pvalue}{.}
+\item{pvalue}{p-value limit (alpha)}
 
-\item{logFC}{.}
+\item{logFC}{log2 fold change limit #VERIFY IT IS REALLY LOG2 (default = 1)}
 
-\item{typeID}{.}
+\item{typeID}{The type of ID used (default="ensembl_gene_id")}
 
-\item{genes_annotation_unique}{.}
+\item{genes_annotation_unique}{All the annotations for every ID in the 2nd row in expr.toBind
+(or rownames of expr.matrix)}
 
-\item{annotations}{.}
+\item{annotations}{Annotation (???)}
 
-\item{adjust}{.}
+\item{adjust}{Which correction for multiple analysis to use (default = "no").
+Note: None is different than no somehow}
 }
 \value{
-Results .
+\describe{
+ \item{results}{topTable of only the significant results}
+ \item{topTable3}{Complete topTable}
+}
 }
 \description{
 Calculate results
 }
 \examples{
 expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
-design <- design_contrasts(expr.matrix)
+design <- design_contrasts(get_names(colnames(expr.matrix)))
 results_list <- results_topTable()
 lm2 <- lm2Contrast(expr.matrix,design)
 lm2.contrast = lm2[[1]]
@@ -43,8 +49,10 @@ contrast.matrix=lm2[[3]]
 Simon J Pelletier
 }
 \seealso{
-\code{\link[limma]{topTable}}
-\code{\link{transcript_count}}
+\code{\link[limma]{topTable}} ,
+\code{\link[limma]{MArrayLM}} ,
+\code{\link{transcript_count}} ,
+\code{\link{expr.toBind}}
 }
 \keyword{limma}
 \keyword{linear}

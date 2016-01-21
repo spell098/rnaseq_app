@@ -1,12 +1,12 @@
 #' Find to which genes belong to the same modules
-#' @import RCytoscape
+#' @import WGCNA
 #' @author Simon J Pelletier
 #' @param expr.matrix  A matrix of expression values. Rows are genes, columns are samples
 #' @param ncores Number of cores available for parallel programming (foreach function)
 #' @param names.unique Names of all groups of sample
 #' @return A list of WGCNA results
 #' @keywords cytoscape export
-#' @seealso \code{\link{RCytoscape}}
+#' @seealso \code{\link{WGCNA}}
 #' @examples
 #' ONLY USE A SUBSET; CAN TAKE A VERY LONG TIME TO RUN
 #' results

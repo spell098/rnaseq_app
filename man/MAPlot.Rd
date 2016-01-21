@@ -27,9 +27,9 @@ Simon J Pelletier
 }
 \seealso{
 \code{\link[limma]{topTable}} ,
-\code{\link[ggplot2]{ggplot}} ,
+\code{\link[ggplot2]{ggplot}}
 
-\code{\link[limma]{plotMA}}{Similar function in the limma package}
+\code{\link[limma]{plotMA}}{ : Similar function in the limma package}
 }
 \keyword{cytoscape}
 \keyword{export}

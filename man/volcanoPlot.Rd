@@ -20,15 +20,16 @@ A list of WGCNA results
 Generates a volcanoplot with ggplot
 }
 \examples{
-topTable3 <-
+topTable3 <- readRDS("data/topTable3.rds")
 }
 \author{
 Simon J Pelletier
 }
 \seealso{
-\code{\link[limma]{topTable}}
-
+\code{\link[limma]{topTable}} ,
 \code{\link[ggplot2]{ggplot}}
+
+\code{\link[limma]{plotMA}}{ : Similar function in the limma package}
 }
 \keyword{cytoscape}
 \keyword{export}

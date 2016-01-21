@@ -17,6 +17,11 @@ The object resultsContrast annotated with an associated color for the selected c
 \description{
 Annotation of a matrix with colors from standardized values
 }
+\examples{
+results <- expr.matrix <- readRDS("data/results_LGVD.rds")
+selectedComparison <-
+resultsContrastRamp <- addColorsMatrix(resultsContrast,selectedComparison)
+}
 \author{
 Simon J Pelletier
 }

@@ -1,28 +1,17 @@
 #' Create a design matrix for linear models analysis
 #' @author Simon J Pelletier
-#' @import limma
 #' @param names A vector of the names of all samples
-#' @return a design matrix for linear models analysis
+#' @return An experimental design matrix
 #' @keywords design linear limma
 #' @seealso
-#' \code{\link{design_contrasts}}
-#' \code{\link{makeContrasts}}
-#' \code{\link[limma]{lmFit}}
+#' \code{\link{get_names}}
 #' @examples
 #' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
-#' design <- design_contrasts(expr.matrix)
-#' lm2 <- lm2Contrast(expr.matrix,design)
-#' lm2.contrast = lm2[[1]]
-#' contrasts=lm2[[2]]
-#' contrast.matrix=lm2[[3]]
+#' names <- get_names(colnames(expr.matrix))
+#' design <- design_contrast(names)
 #' @export
-design_contrasts = function(names){
-  #names=strsplit(colnames(expr.matrix),"_")
-
-  #names2=unlist(lapply(names,function(x){
-  #  paste(x[-length(x)],collapse="_")
-  #}))
-  #colnames(expr.matrix) = names
+design_contrasts = function(expr.matrix){
+  names <- get_names(expr.matrix)
   f <- factor(names, levels = unique(names))
   design <- model.matrix(~0+f)
   colnames(design) <- levels(f)

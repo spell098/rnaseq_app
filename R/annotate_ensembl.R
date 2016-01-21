@@ -4,8 +4,16 @@
 #' @param IDs All IDs (rat or human); all are ensembl_gene_id
 #' @return The object resultsContrast annotated with an associated color for the selected comparison
 #' @keywords ensembl IDs
+#' @examples
+#' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+#' IDs <- rownames(expr.matrix)
+#' annotation1 <- annotate_ensembl(IDs)
+#' annotations <- annotation1[[1]]
+#' go <- annotation1[[2]]
+#' genes_annotation_unique <- annotation1[[3]]
+#' typeID <- annotation1[[4]]
 #' @seealso
-#' \code{\link{colorNumericValues}} #Hyperlink does not seem to be working...
+#' \code{\link{colorNumericValues}}
 #' @export
 annotate_ensembl = function(IDs){
   print("Homemade annotation")

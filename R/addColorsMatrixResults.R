@@ -4,6 +4,10 @@
 #' @param results A matrix of all the values that correspond to the presence of RNA for each transcript analyzed
 #' @return The object resultsContrast annotated with an associated color for the selected comparison
 #' @keywords colors
+#' @examples
+#' results <- expr.matrix <- readRDS("data/results_LGVD.rds")
+#' selectedComparison <-
+#' resultsContrastRamp <- addColorsMatrix(resultsContrast,selectedComparison)
 #' @export
 addColorsMatrixResults <- function(results,selectedComparison){
   resultsContrastRamp = data.matrix(results[[selectedComparison]]$logFC)
