@@ -5,7 +5,7 @@ Repos: BioCsoft=https://bioconductor.org/packages/3.2/bioc,
     BioCann=https://bioconductor.org/packages/3.2/data/annotation,
     BioCexp=https://bioconductor.org/packages/3.2/data/experiment,
     BioCextra=https://bioconductor.org/packages/3.2/extra,
-    CRAN=https://cran.rstudio.com/
+    CRAN=http://cran.rstudio.com/
 
 Package: AnnotationDbi
 Source: Bioconductor
@@ -13,12 +13,10 @@ Version: 1.32.3
 Hash: 2a255186631c31cc7826617da632489e
 Requires: Biobase, BiocGenerics, DBI, IRanges, RSQLite, S4Vectors
 
-Package: AnnotationForge
-Source: Bioconductor
-Version: 1.12.1
-Hash: 779fe7dd241757f8ee210bb2f3021d45
-Requires: AnnotationDbi, Biobase, BiocGenerics, DBI, RSQLite,
-    S4Vectors, org.Hs.eg.db
+Package: BH
+Source: CRAN
+Version: 1.60.0-1
+Hash: 889445e87a2acd4cc58440957f3b0d1a
 
 Package: Biobase
 Source: Bioconductor
@@ -31,18 +29,16 @@ Source: Bioconductor
 Version: 0.16.1
 Hash: c66deb506ef217896ce7d2ee347c95ff
 
+Package: BiocInstaller
+Source: Bioconductor
+Version: 1.20.1
+Hash: 05e58e37e4e2af35c9ba9eb4ee1839e4
+
 Package: Biostrings
 Source: Bioconductor
 Version: 2.38.3
 Hash: 9c1da58f6a8f668ce943febb18fe5961
 Requires: BiocGenerics, IRanges, S4Vectors, XVector
-
-Package: Category
-Source: Bioconductor
-Version: 2.36.0
-Hash: 3442821a035ea6726a893538f3211d35
-Requires: AnnotationDbi, Biobase, BiocGenerics, GO.db, GSEABase, RBGL,
-    annotate, genefilter, graph
 
 Package: DBI
 Source: CRAN
@@ -76,31 +72,6 @@ Source: Bioconductor
 Version: 3.2.2
 Hash: 801a80b78ce89b8026b6e170f1d67bd1
 Requires: AnnotationDbi
-
-Package: GOstats
-Source: Bioconductor
-Version: 2.36.0
-Hash: 99cd18bda42ef1cf2bbf433fdcfa5b9c
-Requires: AnnotationDbi, AnnotationForge, Biobase, Category, GO.db,
-    RBGL, annotate, graph
-
-Package: GSEABase
-Source: Bioconductor
-Version: 1.32.0
-Hash: 26d033f5b65191daa708b1413fd55d58
-Requires: AnnotationDbi, Biobase, BiocGenerics, XML, annotate, graph
-
-Package: GenomeInfoDb
-Source: Bioconductor
-Version: 1.6.1
-Hash: 45de5b83086eb1605d50f7eec64d7a1d
-Requires: BiocGenerics, IRanges, S4Vectors
-
-Package: GenomicRanges
-Source: Bioconductor
-Version: 1.22.3
-Hash: b7a5d53ecf00f01baa4bc7f029d68ba0
-Requires: BiocGenerics, GenomeInfoDb, IRanges, S4Vectors, XVector
 
 Package: Hmisc
 Source: CRAN
@@ -139,22 +110,10 @@ Version: 2.30.0
 Hash: 77d07c7752339b65c5857ad10b10fbd8
 Requires: Biobase, e1071, tkWidgets
 
-Package: PKI
-Source: CRAN
-Version: 0.1-3
-Hash: aca3e459c659b6d8266538520f72ba19
-Requires: base64enc
-
 Package: R6
 Source: CRAN
 Version: 2.1.1
 Hash: 20a88b2c9c84aecff2702789a4d102f5
-
-Package: RBGL
-Source: Bioconductor
-Version: 1.46.0
-Hash: e8055587a56c735a27b66ec1b145000f
-Requires: graph
 
 Package: RColorBrewer
 Source: CRAN
@@ -166,12 +125,6 @@ Source: CRAN
 Version: 1.95-4.7
 Hash: 7756ed9df5d79ca87bc9e93f85d89b87
 Requires: bitops
-
-Package: RCytoscape
-Source: Bioconductor
-Version: 1.20.0
-Hash: 04841a6c8dd1bf9661912944e88e2559
-Requires: BiocGenerics, graph, XMLRPC
 
 Package: RJSONIO
 Source: CRAN
@@ -219,12 +172,6 @@ Source: CRAN
 Version: 3.98-1.3
 Hash: 689166755239c3300769ca2d600381c6
 
-Package: XMLRPC
-Source: CRAN
-Version: 0.3-0
-Hash: 787e4ab51a443398ecfcf0e7dd0fa8b7
-Requires: RCurl, XML
-
 Package: XVector
 Source: Bioconductor
 Version: 0.10.0
@@ -267,21 +214,15 @@ Version: 1.48.0
 Hash: 23d5e16cfe9e6f66dee8d6a17dc6ae3d
 Requires: AnnotationDbi, Biobase, BiocGenerics, DBI, XML, xtable
 
-Package: base64enc
-Source: CRAN
-Version: 0.1-3
-Hash: c590d29e555926af053055e23ee79efb
-
-Package: biomaRt
-Source: Bioconductor
-Version: 2.26.1
-Hash: 0e0ba86b080a57633a635ed19c77983c
-Requires: AnnotationDbi, RCurl, XML
-
 Package: bitops
 Source: CRAN
 Version: 1.0-6
 Hash: 67d0775189fd0041d95abca618c5c07e
+
+Package: brew
+Source: CRAN
+Version: 1.0-6
+Hash: 931f9972deae0f205e1c78a51f33149b
 
 Package: caTools
 Source: CRAN
@@ -303,6 +244,13 @@ Package: curl
 Source: CRAN
 Version: 0.9.4
 Hash: f0845d30266233da7d910ac687a5174b
+
+Package: devtools
+Source: CRAN
+Version: 1.9.1
+Hash: 894e4e2f04fb749f786f15cf01181a0c
+Requires: curl, digest, evaluate, git2r, httr, jsonlite, memoise,
+    roxygen2, rstudioapi, rversions, whisker
 
 Package: dichromat
 Source: CRAN
@@ -335,6 +283,12 @@ Package: e1071
 Source: CRAN
 Version: 1.6-7
 Hash: a8b909c7e06f7bfcbdbbad439799e25d
+
+Package: evaluate
+Source: CRAN
+Version: 0.8
+Hash: aac00bd789bac10970b50e3b7e0cab04
+Requires: stringr
 
 Package: fastcluster
 Source: CRAN
@@ -369,6 +323,11 @@ Source: CRAN
 Version: 2.0.0
 Hash: 5befb1e7a9c7d0692d6c35fa02a29dbf
 Requires: digest, gtable, plyr, reshape2, scales
+
+Package: git2r
+Source: CRAN
+Version: 0.13.1
+Hash: 10b695e315f922046c7d56b9dc7150db
 
 Package: glmnet
 Source: CRAN
@@ -475,6 +434,12 @@ Source: CRAN
 Version: 0.50.1
 Hash: 259edfcf69cb6f48a43e841fd3060738
 
+Package: memoise
+Source: CRAN
+Version: 0.2.1
+Hash: 812e6a1dd77a0ca4da41f3239de8e447
+Requires: digest
+
 Package: mime
 Source: CRAN
 Version: 0.4
@@ -558,20 +523,22 @@ Version: 1.4.1
 Hash: 55963009094746c3aef64bfbf9eb4731
 Requires: Rcpp, plyr, stringr
 
-Package: rsconnect
-Source: github
-Version: 0.4.1.11
-Hash: c06c552fbe7cb2ac83c4a44a18769bc4
-Requires: PKI, RCurl, RJSONIO, digest, packrat, rstudioapi, yaml
-GithubRepo: rsconnect
-GithubUsername: rstudio
-GithubRef: master
-GithubSha1: 3034ab8a812858c2ac649171bcadafd149b83bb7
+Package: roxygen2
+Source: CRAN
+Version: 5.0.1
+Hash: 39ee3aba606f089cb378c4a1cdd6d499
+Requires: Rcpp, brew, digest, stringi, stringr
 
 Package: rstudioapi
 Source: CRAN
 Version: 0.4.0
 Hash: 1daee7a586b46f99ab9114668aa05cc7
+
+Package: rversions
+Source: CRAN
+Version: 1.0.2
+Hash: c006a9eaa80a091dcd87bb4003887b12
+Requires: curl, xml2
 
 Package: scales
 Source: CRAN
@@ -613,10 +580,21 @@ Source: CRAN
 Version: 0.3.2
 Hash: ef5f6994d0a579b6c3bcf90b184068d2
 
+Package: whisker
+Source: CRAN
+Version: 0.3-2
+Hash: 803d662762e532705c2c066a82d066e7
+
 Package: widgetTools
 Source: Bioconductor
 Version: 1.48.0
 Hash: 83f1613b4da0db7c6ab71bcb721541aa
+
+Package: xml2
+Source: CRAN
+Version: 0.1.2
+Hash: 97e011843386f179a5349f9ae80b4dca
+Requires: BH, Rcpp
 
 Package: xtable
 Source: CRAN
