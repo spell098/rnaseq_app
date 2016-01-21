@@ -247,11 +247,11 @@ shinyServer(
         } else {
           x=input$resultsSummary_rows_selected
         }
-        boxplot_element(x,expr.matrix(),resultsSummary(),results(),color())
+        boxplot_element(x,names2(),expr.matrix(),resultsSummary(),results(),color())
       })
       output$boxplot_element_raw <- renderPlot({
        x=input$selectedGenes
-        boxplot_element(x,expr.matrix(),resultsSummary(),topTable3(),color())
+        boxplot_element(x,names2(),expr.matrix(),resultsSummary(),topTable3(),color())
       })
       output$pathway <- renderPlot({
         renderGraph(network1())
