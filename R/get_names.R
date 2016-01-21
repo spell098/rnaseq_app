@@ -8,8 +8,8 @@
 #' @keywords names names.unique
 #' @export
 get_names = function(x){
-  if (is.matrix(x)) names <<- colnames(expr.matrix)
-  else names <<- x
+  if (is.matrix(x)) names <- colnames(expr.matrix)
+  else names <- x
   names1 = rep("",length(names))
   for (i in 1:length(names)){
     nameSplit = strsplit(names[i],"_")
