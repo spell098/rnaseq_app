@@ -4,10 +4,13 @@
 \alias{boxplot_element}
 \title{Generate boxplots of every groups for a selected gene. Also display stars for significance between groups}
 \usage{
-boxplot_element(selectedGene, expr.matrix, resultsSummary, results, color)
+boxplot_element(selectedGene, names, expr.matrix, resultsSummary, results,
+  color)
 }
 \arguments{
 \item{selectedGene}{Gene selected to display boxplots for each groups compared}
+
+\item{names}{A vector of the names of all samples}
 
 \item{expr.matrix}{A matrix of standardized data. Columns = samples, rows = genes,transcripts,CpG...}
 
@@ -19,8 +22,6 @@ between at least two groups. Columns = samples, rows = genes,transcripts,CpG...}
 \item{color}{The colors of all boxplot. One color for each group. Could be found in the function, not imported}
 
 \item{names.unique}{A vector of the names of all groups}
-
-\item{names}{A vector of the names of all samples}
 }
 \description{
 Generate boxplots of every groups for a selected gene. Also display stars for significance between groups

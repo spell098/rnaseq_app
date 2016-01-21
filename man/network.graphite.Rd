@@ -2,27 +2,37 @@
 % Please edit documentation in R/network.graphite.R
 \name{network.graphite}
 \alias{network.graphite}
-\title{Transform intensity values in a gradient of color from green to red.}
+\title{Create a graphNEL graph with directed edges from the results for a specified reaction}
 \usage{
 network.graphite(pSymbol, expr.matrix, toptableNodes, typeID, threshold,
   selectedReaction, toptable3, selectedComparison, expr.toBind, pvalue)
 }
 \arguments{
-\item{pSymbol}{.}
+\item{pSymbol}{Symbol IDs}
 
 \item{expr.matrix}{Expression set containing all the information on a dataset}
 
+\item{toptableNodes}{topTable with added column of the reaction nodes it belongs to}
+
 \item{typeID}{Type of IDs used as rows in the expression matrix.Default="ensembl_gene_id"}
+
+\item{threshold}{Threshold of coexpression}
+
+\item{selectedReaction}{Selected reaction from the topReactions}
+
+\item{selectedComparison}{Comparison studied. Name of the matrices (topTables) in the list "results"}
+
+\item{expr.toBind}{Expression data.matrix with supplemental colums: module and ID}
 
 \item{pvalue}{p-value limit}
 
 \item{topTable3}{topTable results for every gene}
 }
 \value{
-A vector of colors. The darkest green values are the lowest and the darkest red values are the highest.
+A graphNEL graph with directed edges
 }
 \description{
-Transform intensity values in a gradient of color from green to red.
+Create a graphNEL graph with directed edges from the results for a specified reaction
 }
 \examples{
 expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
@@ -33,21 +43,22 @@ ratReactome <- pathways("rnorvegicus", "reactome")
 p <- ratReactome[[selectedReaction]]
 pSymbol <- convertIdentifiers(p, "SYMBOL")
 toptableNodes = cbind(
-   topTable3[[selectedComparison]][match(nodes(pSymbol),topTable3[[selectedComparison]]$symbol),],
+   topTable3[[1]][match(nodes(pSymbol),topTable3[[1]]$symbol),],
    Reaction = rep(selectedReaction[[1]],length(nodes(pSymbol)))
 )
 toptableNodes1 = toptableNodes[!is.na(toptableNodes[,1]),]
 typeID = "ensembl_gene_id"
 threshold = 0.8
 
-network.graphite(pSymbol,expr.matrix,toptableNodes,typeID,threshold,selectedReaction,toptable3,selectedComparison,expr.toBind,pvalue)
+network.graphite(pSymbol,expr.matrix,toptableNodes,typeID,threshold,selectedReaction,topTable3,1,expr.toBind,pvalue)
 }
 \author{
 Simon J Pelletier
 }
 \seealso{
-\code{\link[GEOquery]{getGEO}}
-\code{\link[Biobase]{ExpressionSet}}
+\code{\link{export2cytoscape}}
+\code{\link{graphite}}
 }
-\keyword{comparisons}
+\keyword{graphite}
+\keyword{network}
 

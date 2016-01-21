@@ -1,7 +1,8 @@
+#' @export
 resultsByOntology = function(selectedOntology,result,ontology){
   resultsOntologies = vector("list",length(selectedOntology))
   names(resultsOntologies) = selectedOntology
-  
+
   for(i in 1:length(selectedOntology)){
     selected <- selectedOntology[i]
     genes <- ontology[[3]][selected]

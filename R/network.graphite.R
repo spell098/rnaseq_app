@@ -1,16 +1,21 @@
-#' Transform intensity values in a gradient of color from green to red.
+#' Create a graphNEL graph with directed edges from the results for a specified reaction
 #' @author Simon J Pelletier
 #' @import graphite
-#' @param pSymbol .
+#' @param pSymbol Symbol IDs
 #' @param expr.matrix Expression set containing all the information on a dataset
 #' @param typeID Type of IDs used as rows in the expression matrix.Default="ensembl_gene_id"
+#' @param toptableNodes topTable with added column of the reaction nodes it belongs to
 #' @param topTable3 topTable results for every gene
 #' @param pvalue p-value limit
-#' @return A vector of colors. The darkest green values are the lowest and the darkest red values are the highest.
-#' @keywords comparisons
+#' @param selectedReaction Selected reaction from the topReactions
+#' @param selectedComparison Comparison studied. Name of the matrices (topTables) in the list "results"
+#' @param expr.toBind Expression data.matrix with supplemental colums: module and ID
+#' @param threshold Threshold of coexpression
+#' @return A graphNEL graph with directed edges
+#' @keywords graphite network
 #' @seealso
-#' \code{\link[GEOquery]{getGEO}}
-#' \code{\link[Biobase]{ExpressionSet}}
+#' \code{\link{export2cytoscape}}
+#' \code{\link{graphite}}
 #' @examples
 #' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
 #' topReactions <- readRDS("data/reactions_mfuzz.rds")
@@ -20,14 +25,14 @@
 #' p <- ratReactome[[selectedReaction]]
 #' pSymbol <- convertIdentifiers(p, "SYMBOL")
 #' toptableNodes = cbind(
-#'    topTable3[[selectedComparison]][match(nodes(pSymbol),topTable3[[selectedComparison]]$symbol),],
+#'    topTable3[[1]][match(nodes(pSymbol),topTable3[[1]]$symbol),],
 #'    Reaction = rep(selectedReaction[[1]],length(nodes(pSymbol)))
 #' )
 #' toptableNodes1 = toptableNodes[!is.na(toptableNodes[,1]),]
 #' typeID = "ensembl_gene_id"
 #' threshold = 0.8
 #'
-#' network.graphite(pSymbol,expr.matrix,toptableNodes,typeID,threshold,selectedReaction,toptable3,selectedComparison,expr.toBind,pvalue)
+#' network.graphite(pSymbol,expr.matrix,toptableNodes,typeID,threshold,selectedReaction,topTable3,1,expr.toBind,pvalue)
 #' @export
 network.graphite = function(pSymbol,expr.matrix,toptableNodes,typeID,threshold,selectedReaction,toptable3,selectedComparison,expr.toBind,pvalue){
   nodes = cbind(symbol=nodes(pSymbol),Reaction=rep(selectedReaction,length(nodes(pSymbol))))

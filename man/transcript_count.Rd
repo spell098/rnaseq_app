@@ -20,7 +20,11 @@ Linear model contrast ...
 Counts the number of significant transcripts of the same gene
 }
 \examples{
-.
+expr.matrix=readRDS("data/expr_matrix_LGVD.rds")
+results=readRDS("data/results_LGVD.rds")
+result <- results[[1]]
+annotations = annotate_ensembl(rownames(expr.matrix))[[1]]
+transcriptCount <- transcript_count(result,annotations)
 }
 \author{
 Simon J Pelletier

@@ -28,8 +28,7 @@
 #' This would remove expr.matrix,resultsSummary,results,selectedGene
 #' colors could also be found in the function. this would leave only a vector from expr.matrix(data) and a vector from resultsSummary(significance)
 #' @export
-boxplot_element = function(selectedGene,expr.matrix,resultsSummary,results,color){
-  names <- get_names(colnames(expr.matrix))
+boxplot_element = function(selectedGene,names,expr.matrix,resultsSummary,results,color){
   names.unique <- unique(names)
   nrows=NULL
   for(i in 1:length(names.unique)){

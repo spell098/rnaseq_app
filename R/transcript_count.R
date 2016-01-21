@@ -6,7 +6,12 @@
 #' @param typeID typeID The type of ID used, e.g.
 #' @return Linear model contrast ...
 #' @keywords limma linear
-#' @examples .
+#' @examples
+#' expr.matrix=readRDS("data/expr_matrix_LGVD.rds")
+#' results=readRDS("data/results_LGVD.rds")
+#' result <- results[[1]]
+#' annotations = annotate_ensembl(rownames(expr.matrix))[[1]]
+#' transcriptCount <- transcript_count(result,annotations)
 #' @export
 transcript_count = function(result,annotations,typeID="ensembl_gene_id"){
   count = apply(result,1,function(x){

@@ -1,3 +1,4 @@
+#' @export
 RDA_factors <- function(names){
   labs = as.data.frame(do.call("rbind", strsplit(names,"_")))
   colnames(labs) = lapply(strsplit(comparisons,"\\\\"),function(x){

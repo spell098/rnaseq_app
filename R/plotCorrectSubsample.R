@@ -1,3 +1,4 @@
+#' @export
 plotCorrectSubsample = function(fuzzy){
   z=length(fuzzy[[4]][[4]])+1
   correct = matrix(nrow=z,ncol=20)
@@ -19,7 +20,7 @@ plotCorrectSubsample = function(fuzzy){
   for (k in 1:nrow(correct)){
     lines(correct[k,],type="o",col=k)
   }
-  layout(rbind(1,2), heights=c(7,1)) 
+  layout(rbind(1,2), heights=c(7,1))
   #rect(0.5, 0.9-(nrow(correct)*0.02), 2.8, 1)
   legend(x=0,y=1,names(fuzzy[[i]][[4]]),lty=c(1,1),col=1:nrow(correct),cex=0.6,text.width=1)
 }

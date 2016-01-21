@@ -2,7 +2,9 @@
 % Please edit documentation in R/results_summary.R
 \name{results_summary}
 \alias{results_summary}
-\title{Select in an expression matrix only the rows with significant elements (genes,transcripts...)}
+\title{Summary of the results
+Create a data.frame that displays every gene significant in any comparison and
+the p-value for each comparison.}
 \usage{
 results_summary(results, topTable3, adjust = "no",
   typeID = "ensembl_gene_id")
@@ -17,7 +19,9 @@ The significant rows of the initial expression matrix
 between at least two groups. Columns = samples, rows = genes,transcripts,CpG...
 }
 \description{
-Select in an expression matrix only the rows with significant elements (genes,transcripts...)
+Summary of the results
+Create a data.frame that displays every gene significant in any comparison and
+the p-value for each comparison.
 }
 \examples{
 results <- readRDS("data/results_LGVD.rds")

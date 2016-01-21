@@ -1,3 +1,4 @@
+#' @export
 reactions = function(results,entrezgene_ids,specieEnsembl){
   ALL <- as.character(entrezgene_ids[!is.na(entrezgene_ids)])
   print(head(ALL))

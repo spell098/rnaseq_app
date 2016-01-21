@@ -1,4 +1,10 @@
-numberNames = function(names){ 
+#' Add increasing number at the end of all strings. Duplicated names are uniquely named by incrementing
+#' the number of each new duplicate found.
+#' @author Simon J Pelletier
+#' @param names Strings to add numbers
+#' @return Vector of the numbered strings
+#' @export
+numberNames = function(names){
   names=as.character(names)
   names2=NULL
   for (i in unique(names)){
@@ -11,4 +17,3 @@ numberNames = function(names){
   }
   return(names2)
 }
-

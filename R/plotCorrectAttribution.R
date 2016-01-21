@@ -1,3 +1,4 @@
+#' @export
 plotCorrectAttribution = function(fuzzy){
   correct = NULL
   for(i in 2:length(fuzzy)){

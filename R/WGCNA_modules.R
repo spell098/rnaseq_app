@@ -4,19 +4,20 @@
 #' @param expr.matrix  A matrix of expression values. Rows are genes, columns are samples
 #' @param ncores Number of cores available for parallel programming (foreach function)
 #' @param names.unique Names of all groups of sample
+#'
 #' @return A list of WGCNA results
 #' @keywords cytoscape export
 #' @seealso \code{\link{WGCNA}}
 #' @examples
-#' ONLY USE A SUBSET; CAN TAKE A VERY LONG TIME TO RUN
-#' results
-#' networkSelectedComparison = export2cytoscape(expr.matrix,results[[selectedComparison]],threshold,typeID)
+#' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+#' results <- readRDS("data/results_LGVD.rds")
+#'
+#' bnet = WGCNA_modules(expr.matrix.sample)
 #' @export
-WGCNA_modules = function(expr.matrix,ncores=1,names.unique){
+WGCNA_modules = function(expr.matrix){
+  names.unique=unique(get_names(expr.matrix))
   print("Running WGCNA to find modules")
-  options(stringsAsFactors = FALSE)
-  enableWGCNAThreads(nThreads=ncores)
-  nSets = length(names.unique);
+  nSets = length(names.unique)
   setLabels = names.unique
   # Form multi-set expression data: columns starting from 9 contain actual expression data.
   multiExpr = vector(mode = "list", length = nSets)
@@ -29,13 +30,15 @@ WGCNA_modules = function(expr.matrix,ncores=1,names.unique){
   powerTables = vector(mode = "list", length = nSets);
   # Call the network topology analysis function for each set in turn
   saveRDS(powerTables,file="powerTables.rds")
-
   print("Looking for soft thresholds")
-  powerTables = foreach(set=1:nSets) %dopar% {
-    #print(paste0("Soft threshold #",set," / ",nSets))
-    list(data = pickSoftThreshold(multiExpr[[set]]$data, powerVector=powers,
-                                  verbose = 2)[[2]])
+
+  for(set in 1:nSets){
+    print(paste0("Soft threshold #",set," / ",nSets))
+    powerTables[[set]] = pickSoftThreshold(multiExpr[[set]]$data, powerVector=powers,
+                                 verbose = 2)[[2]]
+
   }
+  saveRDS(powerTables,"powerTables.rds")
   collectGarbage()
   print("Looking for consensus modules")
   bnet = blockwiseConsensusModules(
@@ -45,7 +48,6 @@ WGCNA_modules = function(expr.matrix,ncores=1,names.unique){
     minKMEtoStay = 0,
     saveTOMs = TRUE, verbose = 5,
     nThreads=ncores)
-  save(bnet,file = "bnet.rdata")
   print("Modules informations saved as bnet.rdata")
   return(bnet)
 }

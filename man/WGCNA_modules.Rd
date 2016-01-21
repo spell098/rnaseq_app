@@ -4,7 +4,7 @@
 \alias{WGCNA_modules}
 \title{Find to which genes belong to the same modules}
 \usage{
-WGCNA_modules(expr.matrix, ncores = 1, names.unique)
+WGCNA_modules(expr.matrix)
 }
 \arguments{
 \item{expr.matrix}{A matrix of expression values. Rows are genes, columns are samples}
@@ -20,9 +20,10 @@ A list of WGCNA results
 Find to which genes belong to the same modules
 }
 \examples{
-ONLY USE A SUBSET; CAN TAKE A VERY LONG TIME TO RUN
-results
-networkSelectedComparison = export2cytoscape(expr.matrix,results[[selectedComparison]],threshold,typeID)
+expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+results <- readRDS("data/results_LGVD.rds")
+
+bnet = WGCNA_modules(expr.matrix.sample)
 }
 \author{
 Simon J Pelletier
