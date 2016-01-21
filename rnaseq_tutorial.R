@@ -13,7 +13,7 @@
 #Notes:
 #Il faudrait voir si pour trouver les networks si on devrait faire des sous-groupes selon ce qu'on veut étudier: exemple, high_dorsal - low_dorsal : on regarderait les gènes qui varient ensemble dans seulement ce sous-groupe
 
-setwd("~/Workbench/codes/R/PhD/rnaseq_analysis")
+library(rnaseqApp)
 library(foreach)
 library(parallel)
 library(doParallel)
@@ -28,8 +28,6 @@ library(vegan)
 library(gplots)
 library(GOstats)
 library(pathview)
-source("rnaseq_functions.R")
-source("methylAnalysis_functions.R")
 library(WGCNA)
 #library(rgb)
 library(wesanderson)
@@ -70,7 +68,7 @@ comparisonSelection = comparisons[1]
 #possibleComparisons(names)
 
 ######   Normalization ################
-print("Normalization of the data")
+#print("Normalization of the data")
 design = design_contrasts(expr.matrix)
 #voom2 = voom(expr.matrix,design, plot=F, normalize="quantile")
 #voom3 = voom(expr.matrix,design, plot=T)
@@ -82,7 +80,7 @@ design = design_contrasts(expr.matrix)
 #save(bnet,file="rnaseq_bnet.rdata")
 #saveRDS(bnet,"rnaseq_bnet.rds")
 
-bnet<-readRDS("data/bnet_LGVD.rdata")
+bnet<-readRDS("data/bnet_LGVD.rds")
 expr.toBind = cbind(bnet$colors,rownames(expr.matrix),expr.matrix)
 colnames(expr.toBind)[1:2] = c("module",typeID)
 
@@ -94,13 +92,13 @@ contrasts=lm2[[2]]
 contrast.matrix=lm2[[3]]
 
 print("Finding significative results")
-logFC=c(-1,1)
+logFC=c(-1.3,1.3)
 pvalue=0.05
-results_list = results_topTable(lm2.contrast,expr.toBind,pvalue,logFC,typeID,genes_annotation_unique,annotations)
+results_list = results_topTable(lm2.contrast,expr.toBind,pvalue,logFC,typeID,genes_annotation_unique,annotations,"no")
 results = results_list[[1]]
 topTable3 = results_list[[2]]
 saveRDS(results,file="data/results_LGVD.rds")
-saveRDS(topTable3,file="data/topTable3.rds")
+saveRDS(topTable3,file="data/topTable3_LGVD.rds")
 
 #rownames(lm2.contrast$coef) = ID.annotated.unique[,1][match(rownames(lm2.contrast$coef),ID.annotated.unique[,4])]
 
