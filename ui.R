@@ -2,35 +2,34 @@
 library(shiny)
 shinyUI(fluidPage(
   titlePanel("Linear model analysis"),
-  
+
   tabsetPanel(
     tabPanel("RNA-seq",
              sidebarLayout(
                sidebarPanel(
-                 helpText("Options"),    
+                 helpText("Options"),
                  fileInput("File1", "Updload RNAseq data file"),
                  selectInput("fileContent","File Content",choices=c("Expression Matrix","Expression Set"),selected="Expression Matrix"),
                  tags$textarea(id = "geo_id", placeholder = 'GEO ID', rows = 1, ""),
                  fileInput("File2", "Optional: Upload RNAseq module file"),
                  fileInput("File3", "Optional: Upload RNAseq reactions list"),
                  selectInput("specie","Specie",choices=c("hsapiens","rnorvegicus")),
-                 selectInput("specieEnsembl","specieEnsembl",choices=c("rnorvegicus_gene_ensembl","hsapiens_gene_ensembl")),
                  selectInput("groupBy",label="Make group by",choices=c("groups","fuzzy"),selected="groups"),
                  numericInput("noCluster",label= "Number of clusters for fuzzy c-means clustering",value=3),
-                 
+
                  selectInput("selectedComparison", label = "Select the comparison of interest", choices = NULL),
                  selectInput("selectedVariables",label= "Select the variables to compare",choices=NULL,multiple=TRUE),
-                 
+
                  actionButton("submit1", "Run!"),
-                 
+
                  numericInput("pvalue", label = "Select a p-value",value = 0.01,max=1,min=0),
                  numericInput("logFCneg", label = "Select the negative logFC limit", value = -1.3),
                  numericInput("logFCpos", label = "Select the positive logFC limit", value = 1.3),
                  selectInput("adjust",label="p-value correction method",selected="BH",choices=c("no","none","BH","BY","holm")),
                  actionButton("submit2", "Update restriction parameters")
-                 
+
                  ,witdth=2),
-               
+
                mainPanel(
                  helpText("test"),
                  textOutput("text1"),
@@ -56,38 +55,38 @@ shinyUI(fluidPage(
                                        plotOutput("PCA",height="500px"),
                                        sliderInput("cex.MDS", label = "Labels size of the MDS plot", min=0.5,max = 2, value = 1),
                                        plotOutput("MDS")
-                                      
+
                               ),
                               tabPanel("Volcano & MA plots",
                                        numericInput("pvalueVolcano",label = "p-val for volcano plot",value = 0.05),
                                        numericInput("logFCVolcano",label = "Absolute logFC for volcano plot", value = 1),
                                        plotOutput("volcanoplot"),
-                                       plotOutput("MA")                              
-                                       
+                                       plotOutput("MA")
+
                               )
                             )
                             #N'arrive pas a afficher tous les graphique en loop
-                            
+
                    ),
-                   
-                   tabPanel("Heatmaps",  
+
+                   tabPanel("Heatmaps",
                             selectInput("dendrogram", label = "Dendrograms",choices = c("column","row","both","none"),selected = "none"),
                             selectInput("scale", label = "Scale", choices = c("column","row"), selected="row"),
                             sliderInput("cexRow_heatmap",label = "Caracters size on the x-axis",min=0,max=1.5,value=0.5),
                             sliderInput("row_heatmap_height",label = "Row height",min=0,max=6,value=2,step=0.05),
                             tabsetPanel(
-                              tabPanel("Individual samples", 
-                                       plotOutput("heatmap1",width="100%",height="1000px")                              
+                              tabPanel("Individual samples",
+                                       plotOutput("heatmap1",width="100%",height="1000px")
                               ),
                               tabPanel("Grouped samples",
-                                       plotOutput("heatmap2",width="100%",height="1000px")                              
+                                       plotOutput("heatmap2",width="100%",height="1000px")
                               ),
                               tabPanel("Comparison heatmap",
                                        sliderInput("heatdiagram_cex",label = "Cex heatdiagram",min=0,max=3,value=0.6,step=0.05),
                                        plotOutput("heatDiagram",width="100%",height="1000px")
                               )
                             )
-    
+
                    ) ,
                    tabPanel("Results",
                             tabsetPanel(
@@ -103,7 +102,7 @@ shinyUI(fluidPage(
                                        dataTableOutput("topTable"),
                                        downloadButton('downloadResultsSelectedComparison', 'Download table'),
                                        downloadButton('downloadNodeDataComparison','Download nodes file for cytoscape'),
-                                       downloadButton('downloadEdgeDataComparison','Download edges file for cytoscape'),                              
+                                       downloadButton('downloadEdgeDataComparison','Download edges file for cytoscape'),
                                        downloadButton("downloadColorMatrixResults","Download")
                               ),
                               tabPanel("Venn",
@@ -116,7 +115,7 @@ shinyUI(fluidPage(
                                        dataTableOutput("topGO"),
                                        downloadButton("downloadTopGO","Download"),
                                        tags$textarea(id = "selectedOntology", placeholder = 'ontologies of interest', rows = 8, ""),
-                                       
+
                                        dataTableOutput("selectedGO"),
                                        downloadButton('downloadSelectedGO', 'Download'),
                                        downloadButton('downloadNodeSelectedGO','Download nodes file for cytoscape'),
@@ -139,12 +138,12 @@ shinyUI(fluidPage(
                                        tags$textarea(id = "selectedGenes", placeholder = 'genes of interest', rows = 8, ""),
                                        dataTableOutput("rawTopTable"),
                                        downloadButton("downloadRawTopTable","Download"),
-                                       plotOutput("boxplot_element_raw")                                       
+                                       plotOutput("boxplot_element_raw")
                               )
-               
-                            )       
+
+                            )
                             #verbatimTextOutput("results"),
-    
+
                    ),
                    tabPanel("Network Analysis",
                             textOutput("confirmFindReactions"),
@@ -152,40 +151,40 @@ shinyUI(fluidPage(
                             actionButton("findTopReactions","Find top reactions"),
                             dataTableOutput("topReactions"),
                             tags$textarea(id = "selectedReactions", placeholder = 'Reactions of interest', rows = 3, ""),
-                            
+
                             #selectInput("selectedReactions", label = "Select pathways of interest", choices = NULL),
                             plotOutput("pathway",width="100%",height="800px"),
                             dataTableOutput("pathwayTable")
                    )
                  ))
-             ) ),   
+             ) ),
     tabPanel("Methylation",
              sidebarLayout(
                sidebarPanel(
-                 helpText("Option"),    
+                 helpText("Option"),
                  fileInput("File5", "Updload metylation table file"),
                  fileInput("File6", "Updload metylation results file"),
                  fileInput("File7", "Optional: Upload methylation module file"),
                  fileInput("File8", "Optional: Upload methylation reactions list"),
-                 
+
                  selectInput("specieEnsembl","specieEnsembl",choices=c("rnorvegicus_gene_ensembl","hsapiens_gene_ensembl")),
                  selectInput("symbol","Type of gene symbols",choices=c("rgd_symbol","hgnc_symbol")),
-                 
+
                  selectInput("selectedComparisonMethyl", label = "Select the comparison of interest", choices = NULL),
                  selectInput("selectedVariablesMethyl",label= "Select the variables to compare",choices=NULL,multiple=TRUE),
-                 
+
                  actionButton("submit21", "Run!"),
                  numericInput("methDiffNeg", label = "Select negative limit",value = -25),
                  numericInput("methDiffPos", label = "Select positive limit",value = 25),
-                 
+
                  numericInput("qvalue", label = "Select a q-value",value = 0.01,max=1,min=0),
-                 
+
                  actionButton("submit22", "Update restriction parameters")
-                 
+
                  ,witdth=2),
-               
+
                mainPanel(
-                 textOutput("test2"),   
+                 textOutput("test2"),
                  textOutput("test3"),
 
                  actionButton("submit23","Calculate differential analysis!"),
@@ -213,16 +212,16 @@ shinyUI(fluidPage(
                               )
                             )
                             #N'arrive pas a afficher tous les graphique en loop
-                            
+
                    ),
-                   
-                   tabPanel("Heatmaps",  
+
+                   tabPanel("Heatmaps",
                             selectInput("dendrogram2", label = "Dendrograms",choices = c("column","row","both","none"),selected = "none"),
                             selectInput("scale2", label = "Scale", choices = c("column","row"), selected="row"),
                             sliderInput("cexRow_heatmap2",label = "Caracters size on the x-axis",min=0,max=1.5,value=0.5),
                             sliderInput("row_heatmap_height2",label = "Row height",min=0,max=6,value=2,step=0.05),
                             tabsetPanel(
-                              tabPanel("Individual samples", 
+                              tabPanel("Individual samples",
                                        plotOutput("heatmap21",width="100%",height="1000px")
                               ),
                               tabPanel("Grouped samples",
@@ -232,7 +231,7 @@ shinyUI(fluidPage(
                                        sliderInput("heatdiagram_cex",label = "Cex heatdiagram",min=0,max=3,value=0.6,step=0.05),
                                        plotOutput("heatDiagram2",width="100%",height="1000px")
                               )
-                            )                            
+                            )
                    ) ,
                    tabPanel("Results",
                             tabsetPanel(
@@ -245,18 +244,18 @@ shinyUI(fluidPage(
                                        downloadButton('downloadResultsMethylOut', 'Download'),
                                        downloadButton('downloadNodeDataComparisonMethylOutGene','Download nodes file for cytoscape'),
                                        downloadButton('downloadEdgeDataComparisonMethylOutGene','Download edges file for cytoscape'),
-                                       
+
                                        dataTableOutput("cpgByGene"),
                                        downloadButton('downloadResultsByGene', 'Download'),
                                        downloadButton('downloadNodeDataComparisonMethylByGene','Download nodes file for cytoscape'),
                                        downloadButton('downloadEdgeDataComparisonMethylByGene','Download edges file for cytoscape')
-                                       
-                                       
+
+
                               ),
                               tabPanel("Venn",
                                        sliderInput("lfcMethyl", label = "Select log Fold Change (logFC) limit (absolute)", value = c(1) ,max=5,min=0,step=0.05),
                                        sliderInput("venn.cexMethyl", label = "Venn Diagram caracters size", max=2,min=0.5,value=1),
-                                       plotOutput("vennMethyl") 
+                                       plotOutput("vennMethyl")
                               ),
                               tabPanel("Top gene Ontologies",
                                        dataTableOutput("topGOMethyl")
@@ -266,7 +265,7 @@ shinyUI(fluidPage(
                                        tags$textarea(id = "selectedOntology", placeholder = 'ontologies of interest', rows = 8, ""),
                                        #selectInput("selectedOntology",label = "Select ontologies of interest",choices = NULL),
                                        numericInput("thresholdMethyl","Adjacency threshold for network",value = 0.7),
-                                       
+
                                        dataTableOutput("selectedGOMethyl"),
                                        downloadButton('downloadSelectedGOMethyl', 'Download'),
                                        downloadButton('downloadNodeSelectedGOMethyl','Download nodes file for cytoscape'),
@@ -276,13 +275,13 @@ shinyUI(fluidPage(
                                        actionButton("submitMethylModule","Calculate Modules"),
                                        helpText("This action may take a while..."),
                                        dataTableOutput("moduleTableMethyl")
-                                       
+
                               ),
                               tabPanel("Selected modules results",
                                        numericInput("headModuleMethyl", label = "Number of Modules to display", value = 20),
                                        selectInput("selectedModuleMethyl", label = "Select the module of interest", choices = NULL, multiple=TRUE),
                                        dataTableOutput("selectedModuleMethyl")
-                                       
+
                               ),
                               tabPanel("Raw CpGs",
                                        tags$textarea(id = "selectedCpgs", placeholder = 'CpGs of interest', rows = 8, ""),
@@ -292,27 +291,27 @@ shinyUI(fluidPage(
                                        tags$textarea(id = "selectedCpgGenes", placeholder = 'Genes of interest', rows = 8, ""),
                                        dataTableOutput("rawTopCpgGenes")
                               )
-                              
-                            )       
+
+                            )
                             #verbatimTextOutput("results"),
-                            
+
                    ),
                    tabPanel("Network Analysis",
                             textOutput("confirmFindReactions2"),
                             actionButton("findTopReactions2","Find top reactions"),
                             dataTableOutput("topReactions2"),
                             tags$textarea(id = "selectedReactions2", placeholder = 'Reactions of interest', rows = 3, ""),
-                            
+
                             #selectInput("selectedReactions", label = "Select pathways of interest", choices = NULL),
                             plotOutput("pathway2",width="100%",height="800px"),
-                            dataTableOutput("toptableNodes2")           
+                            dataTableOutput("toptableNodes2")
                    )
                  ))
              )
     ),
     tabPanel("RNAseq / Methylation integration",
       tabsetPanel(
-        
+
         tabPanel("CpG/RNA",
                  dataTableOutput("mergeTable")
                  ),

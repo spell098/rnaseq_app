@@ -57,8 +57,6 @@ shinyServer(
       modulesTable = reactive({NULL})
       expr.toBind = reactive({NULL})
       summaryClust = reactive({NULL})
-
-      specieEnsembl=reactive({input$specieEnsembl})
       if(input$fileContent == "Expression Matrix"){
         expr.matrix = reactive({readRDS(input$File1[,"datapath"])})
         names1 = reactive({get_names(colnames(expr.matrix()))})
@@ -212,7 +210,7 @@ shinyServer(
         print("preparing for SPIA...")
         prepareSPIA(ratReactome(), "reactome",print.names=TRUE)
         print("Looking for top reactions...")
-        topReactions = reactive({reactions(results(),unique(annotations()$entrezgene_id),specieEnsembl())})
+        topReactions = reactive({reactions(results(),unique(annotations()$entrezgene_id))})
         saveRDS(topReactions(),paste0("data/reactions_",paste(input$selectedVariables,collapse = "_"), ".rds"))
       })
 
