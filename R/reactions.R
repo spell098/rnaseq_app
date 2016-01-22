@@ -1,5 +1,23 @@
+#' Top reactions
+#' @import graphite
+#' @description Finds top reactions of each results table
+#' @param results Results list (topTables)
+#' @param entrezgene_ids All ids, entrez format
+#' @examples
+#' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+#' annotation1 = annotate_ensembl(rownames(expr.matrix))
+#' annotations=annotation1[[1]]
+#' results <- readRDS("data/results_LGVD.rds")
+#' entrezgene_ids <- unique(annotations$entrezgene_id)
+#' reactome <- pathways("rnorvegicus", "reactome")
+#' prepareSPIA(reactome, "reactome",print.names=TRUE)
+#' res <- reactions(results,entrezgene_ids)
+#' @seealso
+#' \code{\item[graphite]{pathways}}
+#' \code{\item[graphite]{prepareSPIA}}
+#'
 #' @export
-reactions = function(results,entrezgene_ids,specieEnsembl){
+reactions = function(results,entrezgene_ids){
   ALL <- as.character(entrezgene_ids[!is.na(entrezgene_ids)])
   print(head(ALL))
   res=vector("list",length(results))

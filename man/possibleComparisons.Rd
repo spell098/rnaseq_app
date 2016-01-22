@@ -2,7 +2,7 @@
 % Please edit documentation in R/possibleComparisons.R
 \name{possibleComparisons}
 \alias{possibleComparisons}
-\title{Transform intensity values in a gradient of color from green to red.}
+\title{Possible Comparisons}
 \usage{
 possibleComparisons(names)
 }
@@ -13,7 +13,7 @@ possibleComparisons(names)
 A vector of all possible comparisons
 }
 \description{
-Transform intensity values in a gradient of color from green to red.
+Find all the possible pairs of groups to compare
 }
 \author{
 Simon J Pelletier

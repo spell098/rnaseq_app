@@ -2,16 +2,17 @@
 % Please edit documentation in R/modules_summary.R
 \name{modules_summary}
 \alias{modules_summary}
-\title{Generate boxplots of every groups for a selected gene. Also display stars for significance between groups}
+\title{Returns the summary for a module}
 \usage{
 modules_summary(results, expr.toBind)
 }
 \arguments{
-\item{results}{The results of one comparison
-between at least two groups. Columns = samples, rows = genes,transcripts,CpG...}
+\item{results}{The results of a comparison between two groups.}
+
+\item{expr.toBind}{Expression data.matrix with supplemental colums: module and ID}
 }
 \description{
-Generate boxplots of every groups for a selected gene. Also display stars for significance between groups
+Returns the summary for a module
 }
 \examples{
 results <- readRDS("data/results_LGVD.rds")

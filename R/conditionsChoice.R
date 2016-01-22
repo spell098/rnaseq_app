@@ -8,10 +8,10 @@
 #' \code{\link[GEOquery]{getGEO}}
 #' \code{\link[Biobase]{ExpressionSet}}
 #' @examples
-#' gset <- getGEO('GSE61276', GSEMatrix =TRUE) #GSE61276 GSE12654
-#' exprset <- gset[[1]]
-#' comparisons <- comparisonsPheno(exprset)[[1]]
-#' comparisonsTable <- comparisonsPheno(exprset)[[2]]
+#' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+#' comparisonSelection <- "DORSAL\\VENTRAL"
+#' names <- get_names(expr.matrix)
+#' conditionsChoice(comparisonSelection,names)
 #' @export
 conditionsChoice = function(comparisonSelection,names){
   if (length(comparisonSelection) > 0){

@@ -1,7 +1,7 @@
-#' Generate boxplots of every groups for a selected gene. Also display stars for significance between groups
+#' Returns the summary for a module
 #' @author Simon J Pelletier
-#' @param results The results of one comparison
-#' between at least two groups. Columns = samples, rows = genes,transcripts,CpG...
+#' @param results The results of a comparison between two groups.
+#' @param expr.toBind Expression data.matrix with supplemental colums: module and ID
 #' @examples
 #' results <- readRDS("data/results_LGVD.rds")
 #' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")

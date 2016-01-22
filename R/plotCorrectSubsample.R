@@ -1,3 +1,4 @@
+#' Plot the subsamples correctly attributed
 #' @export
 plotCorrectSubsample = function(fuzzy){
   z=length(fuzzy[[4]][[4]])+1

@@ -1,3 +1,4 @@
+#' Plot the groups correctly attributed
 #' @export
 plotCorrectAttribution = function(fuzzy){
   correct = NULL

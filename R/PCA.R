@@ -1,7 +1,6 @@
 #' Displays a Princpial component analysis graph. USE GGPLOT!!
 #' @param expr.matrix Expression set containing all the information on a dataset
 #' @param colorGroups Color associated with each sample
-#'
 #' @seealso
 #' \code{\link[vegan]{rda}}
 #' \code{\link[vegan]{ggplot}}

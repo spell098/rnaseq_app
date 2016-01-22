@@ -1,3 +1,20 @@
+#' Results by ontology
+#' Return the rows from the results topTable
+#' @param selectedOntology The ontology term selected
+#' @param results The results of one comparison
+#' @param ontology An object
+#' @examples
+#' expr.matrix <- readRDS("data/expr_matrix_LGVD.rds")
+#' results <- readRDS("data/results_LGVD.rds")
+#' annotation1 = annotate_ensembl(rownames(expr.matrix))
+#' go=annotation1[[2]]
+#' typeID=annotation1[[4]]
+#' result <- results[[1]]
+#' ontology <- geneOntology(results,go,typeID,nrow(expr.matrix))
+#' selectedOntology <- names(ontology[[1]][[3]])[1]
+#' resultsByOntology <- resultsByOntology(selectedOntology,result,ontology[[1]])
+#' @seealso
+#' \code{\link{}}
 #' @export
 resultsByOntology = function(selectedOntology,result,ontology){
   resultsOntologies = vector("list",length(selectedOntology))

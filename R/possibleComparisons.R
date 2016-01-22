@@ -1,4 +1,5 @@
-#' Transform intensity values in a gradient of color from green to red.
+#' Possible Comparisons
+#' @description Find all the possible pairs of groups to compare
 #' @author Simon J Pelletier
 #' @param names A vector of the names of all samples
 #' @return A vector of all possible comparisons
