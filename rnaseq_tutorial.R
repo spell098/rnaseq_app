@@ -94,7 +94,7 @@ contrast.matrix=lm2[[3]]
 print("Finding significative results")
 logFC=c(-1.3,1.3)
 pvalue=0.05
-results_list = results_topTable(lm2.contrast,expr.toBind,pvalue,logFC,typeID,genes_annotation_unique,annotations,"no")
+results_list = results_topTable(lm2.contrast,expr.toBind,pvalue,logFC,typeID,genes_annotation_unique,annotations,"BH")
 results = results_list[[1]]
 topTable3 = results_list[[2]]
 saveRDS(results,file="data/results_LGVD.rds")
